@@ -1,0 +1,93 @@
+index.html
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuizDuell 1vs1</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script>
+    const quizFragen = [
+      {
+        frage: "Was ist die Hauptstadt von Kasachstan?",
+        antworten: ["Astana", "Almaty", "Taschkent", "Bischkek"],
+        korrekt: 0
+      },
+      {
+        frage: "Wie viele Beine hat ein Hund?",
+        antworten: ["2", "4", "6", "8"],
+        korrekt: 1
+      }
+    ];
+
+    let aktuellerIndex = 0;
+    let punkte = 0;
+
+    function zeigeFrage() {
+      const frageObj = quizFragen[aktuellerIndex];
+      document.getElementById('frage').innerText = frageObj.frage;
+      const antwortContainer = document.getElementById('antworten');
+      antwortContainer.innerHTML = '';
+      frageObj.antworten.forEach((antwort, index) => {
+        const button = document.createElement('button');
+        button.className = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded';
+        button.innerText = antwort;
+        button.onclick = () => pruefeAntwort(index);
+        antwortContainer.appendChild(button);
+      });
+    }
+
+    function pruefeAntwort(antwortIndex) {
+      if (antwortIndex === quizFragen[aktuellerIndex].korrekt) {
+        punkte++;
+      }
+      aktuellerIndex++;
+      if (aktuellerIndex < quizFragen.length) {
+        zeigeFrage();
+      } else {
+        document.getElementById('quiz').innerHTML = `<h2 class='text-xl font-bold'>Du hast ${punkte} von ${quizFragen.length} Punkten!</h2>`;
+      }
+    }
+
+    function startQuiz() {
+      document.getElementById('codeInputContainer').style.display = 'none';
+      document.getElementById('startBtn').style.display = 'none';
+      document.getElementById('quiz').style.display = 'block';
+      zeigeFrage();
+    }
+
+    function generiereCode() {
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      document.getElementById('generierterCode').innerText = `Teile diesen Code: ${code}`;
+    }
+
+    function verbindeMitCode() {
+      const eingegebenerCode = document.getElementById('codeInput').value;
+      if (eingegebenerCode.length === 6) {
+        startQuiz();
+      } else {
+        alert("Bitte gib einen gültigen 6-stelligen Code ein.");
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="max-w-xl w-full p-6 bg-white rounded-lg shadow-xl text-center">
+    <h1 class="text-3xl font-bold mb-4">QuizDuell 1vs1</h1>
+
+    <div id="codeInputContainer" class="mb-6">
+      <button onclick="generiereCode()" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mb-2">Gruppe erstellen</button>
+      <p id="generierterCode" class="text-lg font-semibold mb-4"></p>
+      <input id="codeInput" type="text" maxlength="6" placeholder="Code eingeben" class="border border-gray-400 px-4 py-2 rounded w-full mb-2">
+      <button onclick="verbindeMitCode()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">Beitreten</button>
+    </div>
+
+    <button id="startBtn" onclick="startQuiz()" class="hidden w-full bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded">Start</button>
+
+    <div id="quiz" style="display:none">
+      <p id="frage" class="text-lg font-semibold"></p>
+      <div id="antworten" class="mt-4"></div>
+    </div>
+  </div>
+</body>
+</html>
