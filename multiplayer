@@ -1,0 +1,21 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBJRPOTkI44aBvNeDoiVRQMfMTWBq-lwIc",
+  authDomain: "quiz-duell.firebaseapp.com",
+  projectId: "quiz-duell",
+  storageBucket: "quiz-duell.firebasestorage.app",
+  messagingSenderId: "805057722546",
+  appId: "1:805057722546:web:c7843213793e1835b0b1ab",
+  measurementId: "G-4WKF2P4QR1"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
